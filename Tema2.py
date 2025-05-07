@@ -110,10 +110,6 @@ def convertToLambdaNFA():
                     transitions = [ ('q'+str(numarStari), x, 'q'+str(numarStari+1)), ('q'+str(numarStari), "lmb", 'q'+str(numarStari+1)) ]
                     numarStari += 2
                 new_x = [start, end, transitions]
-            #print("----------------")
-            #print(new_x[0])
-            #print(new_x[1])
-            #print(new_x[2])
             postfixNotation[i-1] = new_x
             postfixNotation[i:] = postfixNotation[i+1:]
 
@@ -217,10 +213,6 @@ def convertToLambdaNFA():
             postfixNotation[i-2] = nfa
             postfixNotation [i-1:] = postfixNotation[i+1:]
             i -= 1
-            #print("++++++++++++++++")
-            #print(nfa[0])
-            #print(nfa[1])
-            #print(nfa[2])
         
         # acum trebuie sa gasim urmatorul operator
         if i < len(postfixNotation):
@@ -351,33 +343,25 @@ def convertToDFA():
     return [ dfa_start, dfa_end, dfa_transitions ]
 
 
-def validateDFA(dfa_start, dfa_end, dfa_transitions, input_string):
-    # Convertim dfa_start la un format ușor de manipulat (listă de stări)
-    current_states = dfa_start # Dintr-un singur element string într-o listă de stări
-
-    # Procesăm inputul simbol cu simbol
+def validateWithDFA(dfa_start, dfa_end, dfa_transitions, input_string):
+    
+    current_states = dfa_start 
     for symbol in input_string:
         next_states = []
         
-        # Mergem prin fiecare stare curentă
         for state in current_states:
-            # Căutăm tranzitia pentru starea curentă și simbolul dat
             for transition in dfa_transitions:
-                if transition[0] == state and transition[1] == symbol:
+                if transition[0] == state and transition[1] == symbol and transition[2] not in next_states:
                     next_states.append(transition[2])
         
-        # Dacă nu există tranziție pentru un simbol, inputul nu este acceptat
-        if not next_states:
+        if len(next_states) == 0:
             return False
         
-        # Actualizăm stările curente
-        current_states = list(set(next_states))  # eliminăm duplicatele
+        current_states = next_states
     
-    # Verificăm dacă vreo stare finală este în stările curente
-    for state in current_states:
+    for state in current_states: # la finalul inputului, verificam daca am ajuns intr-o stare finala
         if state in dfa_end:
             return True
-    
     return False
         
 
@@ -403,4 +387,4 @@ for elem in data:
     #print( dfa )
 
     for t in elem["test_strings"]:
-        print(RegEx, t["input"], validateDFA(dfa[0], dfa[1], dfa[2], t["input"]), t["expected"] )
+        print(RegEx, t["input"], validateWithDFA(dfa[0], dfa[1], dfa[2], t["input"]), t["expected"] )
