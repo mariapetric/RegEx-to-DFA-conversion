@@ -18,7 +18,7 @@ Acest proiect implementează un convertor de expresii regulate (Regex) în DFA (
         precedente) și evaluează corespunzător operația
     - la final, operandul/operanzii si operatorul sunt eliminați din notația postfixată si în locul lor este introdus rezultatul
 - `convertToDFA()`: transformă NFA-ul într-un DFA, aplicând algoritmul de determinizare prin închideri lambda și BFS.
-    - calculează pentru fiecare stare λ-închiderea sa și apoi, pentru fiecare simbol din nfa, in ce noua stare se ajunge cu λ*sλ* (s fiind
+    - calculează pentru fiecare stare λ-închiderea sa și apoi, pentru fiecare simbol din nfa, in ce noua stare se ajunge cu λ\*sλ\* (s fiind
         un simbol)
     - după ce obține starea inițială a DFA-ului (din fosta stare inițială a NFA-ului --λ*-->), face un BFS și vede unde ajunge cu fiecare 
         simbol din fiecare stare nouă a DFA-ului (cea care este la momentul respectiv în capătul stânga al cozii)
@@ -32,5 +32,5 @@ Acest proiect implementează un convertor de expresii regulate (Regex) în DFA (
 3. Asigură-te că fișierul `LFA-Assignment2_Regex_DFA_v2.json` se află în același director cu scriptul.
 4. Rulează codul:
 
-    cd calea/către/folderul/cu/fișierul
-    python3 main.py
+    cd calea/către/folderul/cu/fișierul<br>
+    python3 main.py  
